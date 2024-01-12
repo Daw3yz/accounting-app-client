@@ -1,0 +1,65 @@
+h1 {
+  font-size: 1.7em !important;
+  font-weight: bold !important;
+}
+
+.center {
+  text-align: center;
+}
+
+.LoginPage-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.SignInCard {
+  min-width: 300px;
+  width: 20%;
+  padding: 40px 25px 40px 25px;
+  border-radius: 8px;
+  filter: drop-shadow(5px 5px 10px black);
+  background-color: #282c34;
+}
+
+.textview-container {
+  padding: 15px 0 15px 0;
+}
+
+.sign-in-button {
+  font-size: 15px;
+  width: 80%;
+  padding: 10px 0 10px 0 !important;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.sign-in-button:active {
+  cursor: default;
+  position: relative;
+  top: 3px;
+}
+
+.sign-up-button {
+  font-size: 15px;
+  width: 80%;
+  padding: 10px 0 10px 0 !important;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.sign-up-button:active {
+  cursor: default;
+  position: relative;
+  top: 3px;
+}
+
+.white-textview {
+  width: 80%;
+  margin: 20px 0 0 0 !important;
+}

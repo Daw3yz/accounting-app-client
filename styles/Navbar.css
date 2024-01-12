@@ -1,0 +1,105 @@
+.navbar-main {
+    background-color: #282c34;
+    width: 100%;
+    position: fixed;
+    height: 70px;
+    z-index: 100;
+    filter: drop-shadow(5px 5px 10px black);
+    color: white;
+}
+
+.navbar-spacing {
+    width: 100%;
+    height: 70px;
+}
+
+.menu-button {
+    border-color: #32d66d !important;
+    color: #32d66d !important;
+    /* border-radius: 80px; */
+    border: none;
+    cursor: pointer;
+    padding: 6px 6px 6px 6px;
+}
+
+.menu-button:hover {
+    background-color: rgb(50, 214, 109, 0.04) !important;
+}
+
+.navbar-element-left {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    float: left;
+    height: 100%
+}
+
+.navbar-element-right {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    float: right;
+    height: 100%
+}
+
+.navbar-element-child {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    align-items: flex-start;
+}
+
+.navbar-icon {
+    padding-top: 3px;
+}
+
+.menu-left {
+    width: 200px;
+    padding-top: 70px;
+    height: 100%;
+    position: fixed;
+    display: block;
+    z-index: 99;
+    background-color: #121418;
+    filter: drop-shadow(5px 5px 10px black);
+    color: white;
+}
+
+.menu-left-content {
+    margin-top: 20px;
+}
+
+.menu-left-button-container {
+    background-color: #121418;
+}
+
+.menu-left-button:hover {
+    background-color: rgb(50, 214, 110, 0.2) !important;
+}
+
+.menu-left-button-selected {
+    background-color: rgb(50, 214, 110, 0.1) !important;
+}
+
+.menu-left-button-selected:hover {
+    background-color: rgb(50, 214, 110, 0.2) !important;
+}
+
+.main-content {
+    background-color: rgb(27, 27, 27);
+    color: white;
+    min-height: calc(100vh - 70px);
+    transition: 0.5s;
+}
+
+.main-content-slider-open {
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    position: absolute;
+    pointer-events: none;
+    content: " ";
+    z-index: 10;
+    display: block;
+    position: absolute;
+    transition: 0.5s;
+}

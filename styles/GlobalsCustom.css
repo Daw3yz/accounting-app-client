@@ -1,0 +1,98 @@
+.green-button-outline {
+    border-color: #32d66d !important;
+    color: #32d66d !important;
+    background-color: transparent;
+    filter: drop-shadow(5px 5px 10px black);
+    padding: 10px 30px 10px 30px;
+    font-size: 15px;
+    min-width: 100px;
+}
+
+.green-button-outline:hover {
+    background-color: rgb(50, 214, 109, 0.04) !important;
+}
+
+.green-button-outline * {
+    margin-right: 3px;
+}
+
+/* .white-textview {
+    margin: 20px 0 0 0 !important;
+} */
+
+
+
+.page-content {
+    /* background-color: white; */
+    /* min-height: 100vh; */
+    /* display: flex; */
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+    padding: 20px 20px 40px 20px;
+}
+
+.white-textview label,
+.email-field label:focus {
+    color: white !important;
+}
+
+.white-textview input {
+    color: white !important;
+}
+
+.white-textview fieldset,
+.email-field fieldset:hover {
+    border-color: white !important;
+}
+
+.white-textview input:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white !important;
+    caret-color: white;
+}
+
+.white-select {
+    color: white !important;
+    /* border: 1px solid white !important; */
+}
+
+.white-select fieldset {
+    border: 1px solid white !important;
+}
+
+.white-select svg {
+    fill: white !important;
+}
+
+.grey-textview label,
+.email-field label:focus {
+    color: #d6d6d6 !important;
+}
+
+.grey-textview input {
+    color: #d6d6d6 !important;
+}
+
+.grey-textview fieldset,
+.email-field fieldset:hover {
+    border-color: #d6d6d6 !important;
+}
+
+.grey-textview input:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #d6d6d6 !important;
+    caret-color: #d6d6d6;
+}
+
+.grey-select {
+    color: #d6d6d6 !important;
+    /* border: 1px solid grey !important; */
+}
+
+.grey-select fieldset {
+    border: 1px solid #d6d6d6 !important;
+}
+
+.grey-select svg {
+    fill: #d6d6d6 !important;
+}

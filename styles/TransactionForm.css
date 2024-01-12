@@ -1,0 +1,11 @@
+.transaction-form {
+    background-color: #282c34;
+    min-height: 70vh;
+    padding: 20px 5px 20px 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.form-control {
+    padding: 0 5px 0 5px;
+}
