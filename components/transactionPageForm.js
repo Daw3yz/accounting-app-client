@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
-export default function TransactionPageForm({ isEditPage, handleSaveButtonClick, ...props }) {
+export default function TransactionPageForm({ isEditPage, handleSaveButtonClick, defaults = {}, ...props }) {
 
     const router = useRouter()
     const [alertType, setAlertType] = useState(null); // ['error', 'warning', 'info', 'success'
@@ -26,7 +26,8 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
         }
 
 
-        axios.get(`${serverUrl}/users/getall`) // Replace with your API endpoint
+
+        axios.get(`${serverUrl}/users/getall`)
             .then(response => {
                 setMenuItems(response.data);
             })
@@ -81,6 +82,7 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
                             className={selectClass}
                             label="User"
                             name="userToId"
+                            defaultValue={'userId' in defaults ? defaults['userId'] : ''}
                         >
                             {menuItems.map((item) => ( // Map over the menu items
                                 <MenuItem key={item.id} value={item.id}>{item.username}</MenuItem>
@@ -88,10 +90,12 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
                         </Select >
                     </FormControl>
                     <FormControl className="col-span-1 form-control">
-                        <TextField name="amount" type="number" labelId="textview-label" className={textViewClass} label="Amount" disabled={isDisabled}></TextField>
+                        <TextField name="amount" type="number" labelId="textview-label" className={textViewClass} label="Amount"
+                            disabled={isDisabled} defaultValue={'amount' in defaults ? defaults['amount'] : ''}></TextField>
                     </FormControl>
                     <FormControl className="col-span-1 form-control">
-                        <TextField name="notes" labelId="textview-label" className={textViewClass} label="Notes" disabled={isDisabled}></TextField>
+                        <TextField name="notes" labelId="textview-label" className={textViewClass} label="Notes"
+                            disabled={isDisabled} defaultValue={'notes' in defaults ? defaults['notes'] : 'OtherNote'}></TextField>
                     </FormControl>
                 </div>
             </form>

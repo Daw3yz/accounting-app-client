@@ -50,7 +50,11 @@ export function Navbar({ pageTitle, children }) {
     }
 
     useEffect(() => {
-        switch (pathname) {
+        var tempPathname = pathname
+        if (tempPathname.includes('/home/transactions/form')) {
+            tempPathname = '/home/transactions/form'
+        }
+        switch (tempPathname) {
             case '/home':
                 setSelectedIndex(0)
                 break;
