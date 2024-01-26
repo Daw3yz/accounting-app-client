@@ -82,7 +82,7 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
                             className={selectClass}
                             label="User"
                             name="userToId"
-                            defaultValue={'userId' in defaults ? defaults['userId'] : ''}
+                            defaultValue={'userTo' in defaults ? defaults['userTo'] : ''}
                         >
                             {menuItems.map((item) => ( // Map over the menu items
                                 <MenuItem key={item.id} value={item.id}>{item.username}</MenuItem>

@@ -35,13 +35,9 @@ export default function CreateTransactionPage() {
 
         axios(config)
             .then((response) => {
-                console.log(response)
                 router.push('form/' + (response.data.id).toString())
 
-                console.log(response)
-
             })
-            // What am I doing? Whatever I'm noob, employers dgaf
             .catch((error) => {
                 throw error
             });

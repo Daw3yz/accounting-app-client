@@ -95,6 +95,10 @@ export default function TransactionPage() {
 
 	}
 
+	function handleRowDoubleClick(params, event) {
+		router.push('/home/transactions/form/' + params.id)
+	}
+
 	function onSelectionChange(ids) {
 		console.log(ids)
 	}
@@ -108,6 +112,8 @@ export default function TransactionPage() {
 		<Button variant="outlined" className="green-button-outline" type="button" onClick={handleOnClickCreate}>
 			<span className="material-icons" >add</span><div >Create</div>
 		</Button>
-		<CustomDataGrid columns={columns} rows={rows} textColor="#e8e8e8" backgroundColor='#282c34' onRowSelectionModelChange={(ids) => onSelectionChange(ids)} checkboxSelection />
+		<CustomDataGrid columns={columns} rows={rows} textColor="#e8e8e8" backgroundColor='#282c34'
+			onRowSelectionModelChange={(ids) => onSelectionChange(ids)} checkboxSelection
+			onRowDoubleClick={handleRowDoubleClick} />
 	</div>)
 }
