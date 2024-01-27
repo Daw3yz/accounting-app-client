@@ -1,3 +1,7 @@
+body {
+    color: white;
+}
+
 .green-button-outline {
     border-color: #32d66d !important;
     color: #32d66d !important;

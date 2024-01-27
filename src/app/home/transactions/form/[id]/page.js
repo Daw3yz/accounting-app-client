@@ -39,7 +39,6 @@ export default function EditTransactionPage({ params }) {
                     'amount': recordData.amount,
                     'notes': recordData.notes,
                 }
-                console.log(recordData)
                 if (defaults.id != recordDataProcessed.id) {
                     setDefaults(recordDataProcessed)
                 }
@@ -67,7 +66,7 @@ export default function EditTransactionPage({ params }) {
 
         axios(config)
             .then((response) => {
-                console.log("EDIT SUCCESSFUL")
+                console.log("Update Success")
 
             })
             .catch((error) => {

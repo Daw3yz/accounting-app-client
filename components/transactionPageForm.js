@@ -41,11 +41,8 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
         if (editMode) {
             var formData = new FormData(document.getElementById("transaction-form"))
             handleSaveButtonClick(formData).then(() => {
-                console.log("Success")
             }
             ).catch((error) => {
-                console.log("Error")
-                console.log(error)
             })
             setEditMode(!editMode)
         } else {

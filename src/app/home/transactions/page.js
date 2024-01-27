@@ -5,13 +5,14 @@ import { TextField, Button, Checkbox } from '@mui/material';
 import '/styles/Transactions.css'
 import { DataGrid, GridColDef, GridApi, GridCellValue } from '@mui/x-data-grid';
 import CustomDataGrid from "/components/customGrid";
+import MenuListComponent from "/components/MenuListComponent";
 import { useEffect } from "react";
 import React from "react"
 import axios from "axios";
 import { useRouter } from 'next/navigation'
 
 
-
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
 export default function TransactionPage() {
 
@@ -55,6 +56,29 @@ export default function TransactionPage() {
 		},
 	];
 
+	const menuItems = {
+		'Delete': () => {
+			var config = {
+				method: 'post',
+				url: serverUrl + '/transactions/delete',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'token': localStorage.getItem("token")
+				},
+				data: { 'ids': selectedRows }
+			};
+
+			axios(config)
+				.then((response) => {
+					console.log("Delete Success")
+
+				})
+				.catch((error) => {
+					throw error
+				});
+		},
+	}
+
 	function getRowValues() {
 		if (localStorage.getItem("token")) {
 			try {
@@ -85,7 +109,6 @@ export default function TransactionPage() {
 						console.log(error)
 					})
 			} catch (error) {
-				console.log("error")
 			}
 		}
 	}
@@ -100,7 +123,8 @@ export default function TransactionPage() {
 	}
 
 	function onSelectionChange(ids) {
-		console.log(ids)
+		setSelectedrows(ids)
+		console.log(selectedRows)
 	}
 
 
@@ -109,9 +133,14 @@ export default function TransactionPage() {
 	}, [])
 
 	return (<div className="page-content">
-		<Button variant="outlined" className="green-button-outline" type="button" onClick={handleOnClickCreate}>
-			<span className="material-icons" >add</span><div >Create</div>
-		</Button>
+		<div className="grid grid-cols-10 gap-3">
+			<Button variant="outlined" className="green-button-outline col-span-1" type="button" onClick={handleOnClickCreate}>
+				<span className="material-icons" >add</span><div >Create</div>
+			</Button>
+			<div className="col-span-8" style={{ display: 'flex', justifyContent: "center", alignContent: "center", paddingRight: "10vh" }}>
+				<MenuListComponent menuItems={menuItems} />
+			</div>
+		</div>
 		<CustomDataGrid columns={columns} rows={rows} textColor="#e8e8e8" backgroundColor='#282c34'
 			onRowSelectionModelChange={(ids) => onSelectionChange(ids)} checkboxSelection
 			onRowDoubleClick={handleRowDoubleClick} />

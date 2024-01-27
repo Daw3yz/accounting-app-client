@@ -22,7 +22,6 @@ export default function CreateTransactionPage() {
             formDataJson[key] = value
         }
         var formDataString = qs.stringify(formDataJson)
-        console.log(formDataString)
         var config = {
             method: 'post',
             url: serverUrl + '/transactions/create',
