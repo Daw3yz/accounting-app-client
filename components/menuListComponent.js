@@ -49,12 +49,13 @@ export default function MenuListComposition({ menuItems }) {
                 <Button
                     ref={anchorRef}
                     id="composition-button"
+                    variant='outlined'
                     aria-controls={open ? 'composition-menu' : undefined}
                     aria-expanded={open ? 'true' : undefined}
                     aria-haspopup="true"
                     onClick={handleToggle}
                 >
-                    Dashboard
+                    Actions
                 </Button>
                 <Popper
                     open={open}
@@ -82,7 +83,10 @@ export default function MenuListComposition({ menuItems }) {
                                         onKeyDown={handleListKeyDown}
                                     >
                                         {Object.keys(menuItems).map((key) => (
-                                            <MenuItem onClick={menuItems[key]}>{key}</MenuItem>
+                                            <MenuItem onClick={() => {
+                                                menuItems[key]()
+                                                handleToggle()
+                                            }}>{key}</MenuItem>
                                         ))}
                                     </MenuList>
                                 </ClickAwayListener>

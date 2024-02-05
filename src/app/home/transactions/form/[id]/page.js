@@ -2,25 +2,27 @@
 
 import React from "react"
 import '/src/app/globals.css'
-import { CircularProgress, Box } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import axios from "axios"
-import { useRouter } from 'next/navigation'
 import TransactionPageForm from "/components/transactionPageForm.js";
-import { useEffect, useLayoutEffect } from "react";
 import qs from "qs";
-
+import ErrorDialog, { useErrorDialog } from "/components/errorDialog";
+import { useTheme } from '@mui/material/styles';
 
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
 export default function EditTransactionPage({ params }) {
 
-    const router = useRouter()
-    const [errorText, setErrorText] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [defaults, setDefaults] = React.useState({});
 
-    useLayoutEffect(() => {
+    const theme = useTheme()
+
+    const { errorDialogOpen, errorText, openErrorDialog, closeErrorDialog } = useErrorDialog();
+
+
+    React.useLayoutEffect(() => {
         var config = {
             method: 'get',
             url: process.env.NEXT_PUBLIC_SERVER_URL + '/transactions/getAll',
@@ -31,6 +33,9 @@ export default function EditTransactionPage({ params }) {
 
         axios(config)
             .then((response) => {
+                if (response.data.error) {
+                    openErrorDialog(response.data.error)
+                }
                 setIsLoading(false)
                 const recordData = response.data.find((record) => record.id == params.id)
                 const recordDataProcessed = {
@@ -43,7 +48,7 @@ export default function EditTransactionPage({ params }) {
                     setDefaults(recordDataProcessed)
                 }
             }).catch((error) => {
-
+                openErrorDialog(error)
             });
     })
 
@@ -63,15 +68,12 @@ export default function EditTransactionPage({ params }) {
             },
             data: formDataString
         };
-
-        axios(config)
-            .then((response) => {
-                console.log("Update Success")
-
-            })
+        const response = await axios(config)
             .catch((error) => {
                 throw error
             });
+
+        return response
     }
 
     if (isLoading) {
@@ -84,7 +86,7 @@ export default function EditTransactionPage({ params }) {
                 height: "90vh",
                 padding: "30px 0 30px 0"
             }}>
-                <CircularProgress style={{ width: "50px", height: "50px", color: "#32d66d" }} />
+                <CircularProgress style={{ width: "50px", height: "50px", color: theme.palette.primary.main }} />
             </div>
         )
     }

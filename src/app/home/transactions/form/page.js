@@ -2,10 +2,9 @@
 
 import React from "react"
 import '/src/app/globals.css'
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import axios from "axios"
 import qs from "qs"
-import { useRouter, usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import TransactionPageForm from "/components/transactionPageForm.js";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
@@ -13,8 +12,6 @@ const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 export default function CreateTransactionPage() {
 
     const router = useRouter()
-    const [errorText, setErrorText] = React.useState(null);
-    const pathname = usePathname()
 
     async function handleSaveButtonClick(formData) {
         var formDataJson = {}
@@ -22,6 +19,8 @@ export default function CreateTransactionPage() {
             formDataJson[key] = value
         }
         var formDataString = qs.stringify(formDataJson)
+
+
         var config = {
             method: 'post',
             url: serverUrl + '/transactions/create',
@@ -32,14 +31,15 @@ export default function CreateTransactionPage() {
             data: formDataString
         };
 
-        axios(config)
-            .then((response) => {
-                router.push('form/' + (response.data.id).toString())
-
-            })
+        const response = await axios(config)
             .catch((error) => {
                 throw error
             });
+
+        if (response.data.error) {
+            return response
+        }
+        router.push('form/' + (response.data.id).toString())
     }
 
     return (

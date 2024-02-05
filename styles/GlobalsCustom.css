@@ -20,9 +20,21 @@ body {
     margin-right: 3px;
 }
 
-/* .white-textview {
-    margin: 20px 0 0 0 !important;
-} */
+.white-button-outline {
+    border-color: #c8c8c8 !important;
+    color: #c8c8c8 !important;
+    background-color: transparent;
+    filter: drop-shadow(5px 5px 10px black);
+    padding: 10px 30px 10px 30px;
+    font-size: 15px;
+    min-width: 100px;
+}
+
+.green-button-outline:hover {
+    background-color: rgba(207, 207, 207, 0.04) !important;
+}
+
+
 
 
 

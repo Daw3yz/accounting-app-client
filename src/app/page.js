@@ -1,13 +1,10 @@
 'use client'
 import React from "react"
-import axios from "axios"
-import { VerifyUser } from '/components/verifyUser'
+import { useRouter } from 'next/navigation'
 
 
 export default function IndexPage() {
+    const router = useRouter()
 
-    return (<>
-        <VerifyUser />
-        <Navbar pageTitle="Home" />
-    </>)
+    router.push('/home')
 }

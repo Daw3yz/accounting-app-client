@@ -24,7 +24,6 @@ export function VerifyUser() {
                 axios(config)
                     .then((response) => {
                         if (response.data[0].id) {
-                            console.log("User is logged in")
                         } else {
                             router.push('/login')
                         }

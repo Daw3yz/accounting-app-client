@@ -1,15 +1,15 @@
 'use client'
-import { VerifyUser } from "/components/verifyUser"
-import { Navbar } from "/components/navbar"
-import { TextField, Button, Checkbox } from '@mui/material';
-import '/styles/Transactions.css'
-import { DataGrid, GridColDef, GridApi, GridCellValue } from '@mui/x-data-grid';
-import CustomDataGrid from "/components/customGrid";
-import MenuListComponent from "/components/MenuListComponent";
-import { useEffect } from "react";
 import React from "react"
 import axios from "axios";
 import { useRouter } from 'next/navigation'
+
+import { Button } from '@mui/material';
+import '/styles/Transactions.css'
+
+import CustomDataGrid from "/components/customGrid";
+import MenuListComponent from "/components/MenuListComponent";
+import ErrorDialog, { useErrorDialog } from "/components/errorDialog";
+
 
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
@@ -18,9 +18,11 @@ export default function TransactionPage() {
 
 	const [rows, setRows] = React.useState(0)
 	const [selectedRows, setSelectedrows] = React.useState([])
+	const [isLoading, setIsLoading] = React.useState(false)
+
+	const { errorDialogOpen, errorText, openErrorDialog, closeErrorDialog } = useErrorDialog();
 
 	const router = useRouter()
-
 
 	const columns = [
 		{
@@ -65,51 +67,63 @@ export default function TransactionPage() {
 					'Content-Type': 'application/x-www-form-urlencoded',
 					'token': localStorage.getItem("token")
 				},
-				data: { 'ids': selectedRows }
+				data: { ids: selectedRows }
 			};
 
 			axios(config)
 				.then((response) => {
-					console.log("Delete Success")
+					if (response.data && response.data.error) {
+						openErrorDialog(response.data.error)
+					}
+					getRowValues()
 
 				})
 				.catch((error) => {
-					throw error
+					// console.log(error)
+					openErrorDialog(error)
+					getRowValues()
+					// throw error
 				});
 		},
+		'Reload Grid': () => {
+			getRowValues()
+		}
 	}
 
 	function getRowValues() {
+		setIsLoading(true)
 		if (localStorage.getItem("token")) {
-			try {
-				var config = {
-					method: 'get',
-					url: process.env.NEXT_PUBLIC_SERVER_URL + '/transactions/getAll',
-					headers: {
-						'token': localStorage.getItem("token")
+			var config = {
+				method: 'get',
+				url: process.env.NEXT_PUBLIC_SERVER_URL + '/transactions/getAll',
+				headers: {
+					'token': localStorage.getItem("token")
+				}
+			};
+
+
+			axios(config)
+				.then((response) => {
+					if (response.data.error) {
+						openErrorDialog(response.data.error)
 					}
-				};
-
-
-				axios(config)
-					.then((response) => {
-						let rowsTemp = []
-						for (var i = 0; i < response.data.length; i++) {
-							let currentRow = response.data[i]
-							rowsTemp.push({
-								'id': currentRow.id,
-								'amount': currentRow.amount,
-								'userFrom': currentRow.userFrom.username,
-								'userTo': currentRow.userTo.username,
-								'notes': currentRow.notes,
-							})
-						}
-						setRows(rowsTemp)
-					}).catch((error) => {
-						console.log(error)
-					})
-			} catch (error) {
-			}
+					let rowsTemp = []
+					for (var i = 0; i < response.data.length; i++) {
+						let currentRow = response.data[i]
+						rowsTemp.push({
+							'id': currentRow.id,
+							'amount': currentRow.amount,
+							'userFrom': currentRow.userFrom.username,
+							'userTo': currentRow.userTo.username,
+							'notes': currentRow.notes,
+						})
+					}
+					setRows(rowsTemp)
+					setIsLoading(false)
+				}).catch((error) => {
+					setIsLoading(false)
+					openErrorDialog(error)
+				})
 		}
 	}
 
@@ -124,15 +138,15 @@ export default function TransactionPage() {
 
 	function onSelectionChange(ids) {
 		setSelectedrows(ids)
-		console.log(selectedRows)
 	}
 
-
-	useEffect(() => {
+	React.useEffect(() => {
 		getRowValues()
 	}, [])
 
 	return (<div className="page-content">
+		<ErrorDialog open={errorDialogOpen} title="Error" message={errorText} handleClose={closeErrorDialog}></ErrorDialog>
+
 		<div className="grid grid-cols-10 gap-3">
 			<Button variant="outlined" className="green-button-outline col-span-1" type="button" onClick={handleOnClickCreate}>
 				<span className="material-icons" >add</span><div >Create</div>
@@ -143,6 +157,6 @@ export default function TransactionPage() {
 		</div>
 		<CustomDataGrid columns={columns} rows={rows} textColor="#e8e8e8" backgroundColor='#282c34'
 			onRowSelectionModelChange={(ids) => onSelectionChange(ids)} checkboxSelection
-			onRowDoubleClick={handleRowDoubleClick} />
+			onRowDoubleClick={handleRowDoubleClick} loading={isLoading} />
 	</div>)
 }

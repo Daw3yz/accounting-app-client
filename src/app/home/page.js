@@ -1,6 +1,4 @@
 'use client'
-import { VerifyUser } from "/components/verifyUser"
-import { Navbar } from "/components/navbar"
 import '/styles/home.css'
 import React from "react"
 
