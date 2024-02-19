@@ -122,6 +122,9 @@ export default function GridPage({ apiUrl, clientUrl, columns = [], convertApiDa
     }
 
     function handleRowDoubleClick(params, event) {
+        if (props.disableCreate) {
+            return
+        }
         router.push(clientUrl + params.id)
     }
 

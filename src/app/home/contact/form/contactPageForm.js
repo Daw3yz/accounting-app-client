@@ -70,7 +70,7 @@ export default function ContactPageForm({ isEditPage, handleSaveButtonClick, def
             <ErrorDialog open={errorDialogOpen} title="Error" message={errorText} handleClose={closeErrorDialog}></ErrorDialog>
             <div style={{ display: "flex" }}>
 
-                <Button type="button" variant="outlined" className="green-button-outline col-span-1" onClick={onSaveButtonClick}>
+                <Button type="button" variant="outlined" className="green-button-outline col-span-1" onClick={onSaveButtonClick} disabled={isLoading}>
                     {editMode ? "Save" : "Edit"}
                 </Button>
                 <Button type="button" variant="outlined" sx={{ marginLeft: "10px" }} className="white-button-outline col-span-1" onClick={() => { router.push('/home/contact') }}>
