@@ -4,7 +4,7 @@ import React from "react"
 import '/src/app/globals.css'
 import { CircularProgress } from '@mui/material';
 import axios from "axios"
-import TransactionPageForm from "/components/transactionPageForm.js";
+import ContactPageForm from "../contactPageForm.js";
 import qs from "qs";
 import ErrorDialog, { useErrorDialog } from "/components/errorDialog";
 import { useTheme } from '@mui/material/styles';
@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
-export default function EditTransactionPage({ params }) {
+export default function EditContactPage({ params }) {
 
     const [isLoading, setIsLoading] = React.useState(true);
     const [defaults, setDefaults] = React.useState({});
@@ -25,7 +25,7 @@ export default function EditTransactionPage({ params }) {
     React.useLayoutEffect(() => {
         var config = {
             method: 'get',
-            url: process.env.NEXT_PUBLIC_SERVER_URL + '/transactions/getAll',
+            url: process.env.NEXT_PUBLIC_SERVER_URL + '/contact/getAll',
             headers: {
                 'token': localStorage.getItem("token")
             }
@@ -40,9 +40,10 @@ export default function EditTransactionPage({ params }) {
                 const recordData = response.data.find((record) => record.id == params.id)
                 const recordDataProcessed = {
                     'id': recordData.id,
-                    'userTo': recordData.userTo.id,
-                    'amount': recordData.amount,
-                    'notes': recordData.notes,
+                    'name': recordData.name,
+                    'type': recordData.type,
+                    'phone': recordData.phone,
+                    'email': recordData.email,
                 }
                 if (defaults.id != recordDataProcessed.id) {
                     setDefaults(recordDataProcessed)
@@ -61,7 +62,7 @@ export default function EditTransactionPage({ params }) {
         var formDataString = qs.stringify(formDataJson)
         var config = {
             method: 'post',
-            url: serverUrl + '/transactions/write',
+            url: serverUrl + '/contact/write',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'token': localStorage.getItem("token")
@@ -92,6 +93,6 @@ export default function EditTransactionPage({ params }) {
     }
 
     return (
-        <TransactionPageForm isEditPage={true} handleSaveButtonClick={handleSaveButtonClick} defaults={defaults} />
+        <ContactPageForm isEditPage={true} handleSaveButtonClick={handleSaveButtonClick} defaults={defaults} />
     )
 }

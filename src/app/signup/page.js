@@ -41,7 +41,6 @@ function SignInCard() {
 
         })
         .catch((error) => {
-          console.log(error);
         });
 
 

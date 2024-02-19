@@ -1,15 +1,22 @@
-body {
-    color: white;
+:root {
+    --primary-color: #32d66d;
+    /* --primary-color: #32d66d; */
+    --secondary-color: #282c34;
+    --secondary-color-light: #2e2e2e;
+    --secondary-color-lighter: #393939;
+    --secondary-color-lighterer: #505050;
+    --default-background-color: rgb(27, 27, 27);
+    --default-text-color: #eaeaea;
 }
 
 .green-button-outline {
-    border-color: #32d66d !important;
-    color: #32d66d !important;
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
     background-color: transparent;
     filter: drop-shadow(5px 5px 10px black);
     padding: 10px 30px 10px 30px;
     font-size: 15px;
-    min-width: 100px;
+    /* min-width: 100px; */
 }
 
 .green-button-outline:hover {
@@ -21,8 +28,8 @@ body {
 }
 
 .white-button-outline {
-    border-color: #c8c8c8 !important;
-    color: #c8c8c8 !important;
+    border-color: var(--default-text-color) !important;
+    color: var(--default-text-color) !important;
     background-color: transparent;
     filter: drop-shadow(5px 5px 10px black);
     padding: 10px 30px 10px 30px;
@@ -39,9 +46,6 @@ body {
 
 
 .page-content {
-    /* background-color: white; */
-    /* min-height: 100vh; */
-    /* display: flex; */
     flex-direction: column;
     font-size: calc(10px + 2vmin);
     padding: 20px 20px 40px 20px;
@@ -49,66 +53,60 @@ body {
 
 .white-textview label,
 .email-field label:focus {
-    color: white !important;
+    color: var(--default-text-color) !important;
 }
 
 .white-textview input {
-    color: white !important;
+    color: var(--default-text-color) !important;
 }
 
 .white-textview fieldset,
 .email-field fieldset:hover {
-    border-color: white !important;
+    border-color: var(--default-text-color) !important;
 }
 
 .white-textview input:-webkit-autofill {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: white !important;
-    caret-color: white;
+    -webkit-text-fill-color: var(--default-text-color) !important;
+    caret-color: var(--default-text-color);
 }
 
 .white-select {
-    color: white !important;
-    /* border: 1px solid white !important; */
+    color: var(--default-text-color) !important;
+    /* border: 1px solid var(--default-text-color) !important; */
 }
 
 .white-select fieldset {
-    border: 1px solid white !important;
+    border: 1px solid var(--default-text-color) !important;
 }
 
 .white-select svg {
-    fill: white !important;
+    fill: var(--default-text-color) !important;
 }
 
-.grey-textview label,
-.email-field label:focus {
-    color: #d6d6d6 !important;
+.white-select-label {
+    color: var(--default-text-color) !important;
+    /* border: 1px solid var(--default-text-color) !important; */
 }
 
-.grey-textview input {
-    color: #d6d6d6 !important;
+::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+    /* box-shadow: 0px 0px 5px rgb(27, 27, 27, 0.5); */
 }
 
-.grey-textview fieldset,
-.email-field fieldset:hover {
-    border-color: #d6d6d6 !important;
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--secondary-color-light);
 }
 
-.grey-textview input:-webkit-autofill {
-    transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: #d6d6d6 !important;
-    caret-color: #d6d6d6;
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color-lighter);
+    ;
 }
 
-.grey-select {
-    color: #d6d6d6 !important;
-    /* border: 1px solid grey !important; */
-}
-
-.grey-select fieldset {
-    border: 1px solid #d6d6d6 !important;
-}
-
-.grey-select svg {
-    fill: #d6d6d6 !important;
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color-lighterer);
 }

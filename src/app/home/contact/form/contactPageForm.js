@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react"
-import '/styles/TransactionForm.css'
+import '/styles/FormTemplate.css'
 import '/src/app/globals.css'
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Alert } from '@mui/material';
 import axios from "axios"
@@ -12,10 +12,10 @@ import ErrorDialog, { useErrorDialog } from "/components/errorDialog";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
-export default function TransactionPageForm({ isEditPage, handleSaveButtonClick, defaults = {}, ...props }) {
+export default function ContactPageForm({ isEditPage, handleSaveButtonClick, defaults = {}, ...props }) {
 
     const router = useRouter()
-    const [menuItems, setMenuItems] = useState([]);
+    const [typeItems, setTypeItems] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [disableEverything, setDisableEverything] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -30,12 +30,12 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
             setEditMode(true)
         }
 
-        axios.get(`${serverUrl}/users/getall`)
+        axios.get(`${serverUrl}/contact/getcontacttypes`)
             .then(response => {
                 if (response.data.error) {
                     openErrorDialog(response.data.error)
                 }
-                setMenuItems(response.data);
+                setTypeItems(response.data);
             })
             .catch(error => {
                 openErrorDialog(error)
@@ -44,7 +44,7 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
 
     function onSaveButtonClick(e) {
         if (editMode) {
-            var formData = new FormData(document.getElementById("transaction-form"))
+            var formData = new FormData(document.getElementById("form-main"))
             setIsLoading(true)
             handleSaveButtonClick(formData).then((response) => {
                 setIsLoading(false)
@@ -68,43 +68,48 @@ export default function TransactionPageForm({ isEditPage, handleSaveButtonClick,
     return (
         <div className="page-content">
             <ErrorDialog open={errorDialogOpen} title="Error" message={errorText} handleClose={closeErrorDialog}></ErrorDialog>
-            <div className="grid grid-cols-10 gap-3">
+            <div style={{ display: "flex" }}>
 
                 <Button type="button" variant="outlined" className="green-button-outline col-span-1" onClick={onSaveButtonClick}>
                     {editMode ? "Save" : "Edit"}
                 </Button>
-                <Button type="button" variant="outlined" className="white-button-outline col-span-1" onClick={() => { router.push('/home/transactions') }}>
+                <Button type="button" variant="outlined" sx={{ marginLeft: "10px" }} className="white-button-outline col-span-1" onClick={() => { router.push('/home/contact') }}>
                     Back
                 </Button>
             </div>
-            <form style={{ marginTop: '10px', padding: '0 0 0 0' }} className="transaction-form" id="transaction-form">
+            <form style={{ marginTop: '10px', padding: '0 0 0 0' }} className="form-main" id="form-main">
 
                 <div className="loading-overlay" style={{ display: isLoading ? 'block' : 'none' }}>
                     <CircularProgress className="loading-progress" style={{ display: isLoading ? 'block' : 'none' }} />
                 </div>
-                <div className="grid grid-cols-3 gap-0">
+                <div className="grid grid-cols-4 gap-0">
+
                     <FormControl className="col-span-1 form-control">
-                        <InputLabel id="user-select-label" sx={{ color: inputColor, top: '10px' }}>User</InputLabel>
+                        <TextField name="name" type="string" labelId="textview-label" className={textViewClass} label="Name"
+                            disabled={disabledEditMode || disableEverything} defaultValue={'name' in defaults ? defaults['name'] : ''}></TextField>
+                    </FormControl>
+                    <FormControl className="col-span-1 form-control">
+                        <InputLabel id="type-select-label" sx={{ color: inputColor, top: '10px' }}>Type</InputLabel>
                         <Select
                             disabled={disabledEditMode || disableEverything}
-                            labelId="user-select-label"
+                            labelId="type-select-label"
                             className={selectClass}
-                            label="User"
-                            name="userToId"
-                            defaultValue={'userTo' in defaults ? defaults['userTo'] : ''}
+                            label="type"
+                            name="type"
+                            defaultValue={'type' in defaults ? defaults['type'] : ''}
                         >
-                            {menuItems.map((item) => ( // Map over the menu items
-                                <MenuItem key={item.id} value={item.id}>{item.username}</MenuItem>
+                            {typeItems.map((item) => ( // Map over the menu items
+                                <MenuItem key={item} value={item}>{item}</MenuItem>
                             ))}
                         </Select >
                     </FormControl>
                     <FormControl className="col-span-1 form-control">
-                        <TextField name="amount" type="number" labelId="textview-label" className={textViewClass} label="Amount"
-                            disabled={disabledEditMode || disableEverything} defaultValue={'amount' in defaults ? defaults['amount'] : ''}></TextField>
+                        <TextField name="phone" labelId="textview-label" className={textViewClass} label="Phone"
+                            disabled={disabledEditMode || disableEverything} defaultValue={'phone' in defaults ? defaults['phone'] : ''}></TextField>
                     </FormControl>
                     <FormControl className="col-span-1 form-control">
-                        <TextField name="notes" labelId="textview-label" className={textViewClass} label="Notes"
-                            disabled={disabledEditMode || disableEverything} defaultValue={'notes' in defaults ? defaults['notes'] : ''}></TextField>
+                        <TextField name="email" labelId="textview-label" className={textViewClass} label="Email"
+                            disabled={disabledEditMode || disableEverything} defaultValue={'email' in defaults ? defaults['email'] : ''}></TextField>
                     </FormControl>
                 </div>
             </form>

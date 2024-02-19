@@ -1,9 +1,10 @@
 'use client'
-import { VerifyUser } from "/components/verifyUser"
+import { VerifyUser, UserContext } from "/components/verifyUser"
 import { Navbar } from "/components/navbar"
 import React from "react"
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CircularProgress } from '@mui/material';
+import axios from "axios"
 
 const theme = createTheme({
     palette: {
@@ -12,20 +13,42 @@ const theme = createTheme({
         },
         secondary: {
             main: '#282c34',
+            darker: '#181a1f'
         },
         background: {
-            main: "rgb(27, 27, 27)"
+            main: "rgb(27, 27, 27)",
+            darker: "rgb(20, 20, 20)",
         }
     },
 });
 
 export default function CurrentLayout({ children }) {
     const [isLoading, setIsLoading] = React.useState(true)
+    const [currentUser, setCurrentUser] = React.useState({})
 
     React.useLayoutEffect(() => {
         setIsLoading(false)
-
     })
+
+    React.useEffect(() => {
+        var config = {
+            method: 'get',
+            url: process.env.NEXT_PUBLIC_SERVER_URL + '/users/getCurrentUser',
+            headers: {
+                'token': localStorage.getItem("token")
+            }
+        };
+
+        axios(config)
+            .then((response) => {
+                setCurrentUser(response.data[0])
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }, [])
+
+
 
     if (isLoading) {
 
@@ -53,12 +76,17 @@ export default function CurrentLayout({ children }) {
 
 
     return (<ThemeProvider theme={theme}>
-        <VerifyUser />
-        <div className="HomePage-header">
-            <Navbar pageTitle="Home" >
-                {children}
-            </Navbar>
 
-        </div>
+        <UserContext.Provider value={currentUser}>
+            <VerifyUser currentUser={currentUser} />
+            {Object.keys(currentUser).length > 1 &&
+                <div className="HomePage-header">
+                    <Navbar pageTitle="Home" >
+                        {children}
+                    </Navbar>
+
+                </div>
+            }
+        </UserContext.Provider>
     </ThemeProvider>)
 }

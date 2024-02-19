@@ -1,11 +1,11 @@
 .navbar-main {
-    background-color: #282c34;
+    background-color: var(--secondary-color);
     width: 100%;
     position: fixed;
     height: 70px;
     z-index: 100;
     filter: drop-shadow(5px 5px 10px black);
-    color: white;
+    color: var(--default-text-color);
 }
 
 .navbar-spacing {
@@ -14,8 +14,8 @@
 }
 
 .menu-button {
-    border-color: #32d66d !important;
-    color: #32d66d !important;
+    border-color: var(--primary-color) !important;
+    color: var(--primary-color) !important;
     /* border-radius: 80px; */
     border: none;
     cursor: pointer;
@@ -62,7 +62,7 @@
     z-index: 99;
     background-color: #121418;
     filter: drop-shadow(5px 5px 10px black);
-    color: white;
+    color: var(--default-text-color);
 }
 
 .menu-left-content {
@@ -87,7 +87,7 @@
 
 .main-content {
     background-color: rgb(27, 27, 27);
-    color: white;
+    color: var(--default-text-color);
     min-height: calc(100vh - 70px);
     transition: 0.5s;
 }

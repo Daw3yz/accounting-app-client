@@ -1,6 +1,6 @@
-.transaction-form {
+.form-main {
     position: relative;
-    background-color: #282c34;
+    background-color: var(--secondary-color);
     min-height: 70vh;
     padding: 20px 5px 20px 5px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
@@ -18,7 +18,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
-    /* background-color: #282c34; */
+    /* background-color: var(--secondary-color); */
 }
 
 .loading-overlay {

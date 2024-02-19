@@ -4,10 +4,11 @@ import React from "react"
 import { useEffect } from "react"
 import axios from "axios"
 
+export const UserContext = React.createContext();
 
-
-export function VerifyUser() {
+export function VerifyUser({ currentUser }) {
     const router = useRouter()
+
 
 
     useEffect(() => {

@@ -5,11 +5,11 @@ import '/src/app/globals.css'
 import axios from "axios"
 import qs from "qs"
 import { useRouter } from 'next/navigation'
-import TransactionPageForm from "/components/transactionPageForm.js";
+import AccountMovePageForm from "./accountMovePageForm.js";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
-export default function CreateTransactionPage() {
+export default function CreateAccountMovePage() {
 
     const router = useRouter()
 
@@ -23,7 +23,7 @@ export default function CreateTransactionPage() {
 
         var config = {
             method: 'post',
-            url: serverUrl + '/transactions/create',
+            url: serverUrl + '/account-move/create',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'token': localStorage.getItem("token")
@@ -43,6 +43,6 @@ export default function CreateTransactionPage() {
     }
 
     return (
-        <TransactionPageForm isEditPage={false} handleSaveButtonClick={handleSaveButtonClick} />
+        <AccountMovePageForm isEditPage={false} handleSaveButtonClick={handleSaveButtonClick} />
     )
 }
